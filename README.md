@@ -177,3 +177,8 @@ Let's also add some top-level middleware that will track any errors that occur i
 Now let's add commit and push, re-deploy and try and add a student. Any errors or messages should now show up in Rollbar. 
 
 You should get an error saying that name can't be destructured from req.body. The traceback gives us detailed info about where and why the error occured. 
+
+In this case, we haven't added the middleware to parse incoming JSON in our server, so req.body is undefined. add this after the line where we create our app:
+`app.use(express.json())`
+
+After adding, committing, pushing and redeploying, we should now see the students logged to the console on the app page, as well as our log in the post request in rollbar. 
