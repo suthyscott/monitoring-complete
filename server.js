@@ -11,6 +11,7 @@ let rollbar = new Rollbar({
 const app = express()
 
 app.use(express.json())
+app.use('/style', express.static('./public/styles.css'))
 
 let students = []
 
@@ -27,9 +28,7 @@ app.post('/api/student', (req, res)=>{
 
     if(index === -1 && name !== ''){
         students.push(name)
-
         rollbar.log('Student added successfully', {author: 'Scott', type: 'manual entry'})
-    
         res.status(200).send(students)
     } else if (name === ''){
         rollbar.error('No name given')

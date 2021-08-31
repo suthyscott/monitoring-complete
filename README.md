@@ -1,5 +1,10 @@
 Create a new directory. 
 
+<details><summary>
+We'll update our html to loop over the array of student names and display them on the front end: 
+</summary>
+</details>
+
 Create a server.js file within that directory, then make a public folder with html and css files.
 
 run `npm init -y` in the root directory. Now we can install express `npm i express`. 
@@ -182,3 +187,80 @@ In this case, we haven't added the middleware to parse incoming JSON in our serv
 `app.use(express.json())`
 
 After adding, committing, pushing and redeploying, we should now see the students logged to the console on the app page, as well as our log in the post request in rollbar. 
+
+### More Rollbar logs
+
+<details><summary>
+We'll update our html to loop over the array of student names and display them on the front end: 
+</summary>
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+    <h1>Student List</h1>
+    <form>
+        <input type="text" placeholder="Type name here"/>
+        <button>Add Student</button>
+    </form>
+    <section></section>
+    <script>
+        const addForm = document.querySelector('form')
+        const nameInput = document.querySelector('input')
+        const container = document.querySelector('section')
+
+        function submitHandler(e){
+            e.preventDefault()
+            axios.post('/api/student', {name: nameInput.value, })
+                .then(res => {
+                    container.innerHTML = ''
+
+                    res.data.forEach(studentName => {
+                        container.innerHTML += `<p>${studentName}</p>`
+                    })
+                })
+                .catch(err => console.log(err))
+        }
+
+        addForm.addEventListener('submit', submitHandler)
+    </script>
+</body>
+</html>
+```
+</details>
+
+<details>
+<summary>
+And now we'll build out our post endpoint to check for if the student name is a valid string and if it already exist, in which cases we'll want to have appropriate error handling: 
+</summary>
+
+```
+app.post('/api/student', (req, res)=>{
+    let {name} = req.body
+    name = name.trim()
+
+    const index = students.findIndex(studentName=> studentName === name)
+
+    if(index === -1 && name !== ''){
+        students.push(name)
+        rollbar.log('Student added successfully', {author: 'Scott', type: 'manual entry'})
+        res.status(200).send(students)
+    } else if (name === ''){
+        rollbar.error('No name given')
+        res.status(400).send('must provide a name.')
+    } else {
+        rollbar.error('student already exists')
+        res.status(400).send('that student already exists')
+    }
+
+})
+```
+
+</details>
