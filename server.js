@@ -22,9 +22,15 @@ app.post('/api/student', (req, res)=>{
     name = name.trim()
 
     students.push(name)
+    // rolly
     rollbar.log('Student added successfully', {author: 'Scott', type: 'manual entry'})
+
+    res.status(200).send(students)
 })
 
 const port = process.env.PORT || 4545
+
+// rolly
+app.use(rollbar.errorHandler())
 
 app.listen(port, () => console.log(`Take us to warp ${port}!`))
