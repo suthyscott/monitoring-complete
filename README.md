@@ -97,4 +97,8 @@ app.get('/', (req,res) => {
 })
 ```
 
-Now add commit and push those changes, then re-deploy through Heroku. You can also enable Automatic deploys to rebuild it for it whenever changes are made. 
+Now add commit and push those changes, then re-deploy through Heroku. You can also enable Automatic deploys to rebuild it for it whenever changes are made. The page needs to be deployed with the latest changes and open in order for the next step to work. 
+
+Now we want to view the log in Rollbar. Go to the Items tab, where you should be able to select the first project (it may be selected for you automatically). In order to see the log you'll need to check all levels. We should see the log in our server file listed there. 
+
+Rollbar keeps track of the total times a log has been received. You'll see the total increase every time you refresh the page. If you open a log you'll see a bunch of other useful info about the log. 
