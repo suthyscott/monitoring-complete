@@ -297,6 +297,27 @@ We'll update our html to loop over the array of student names and display them o
 
 <details>
 <summary>
+Add the following into your CSS file to have your error messages styled:</summary>
+
+```
+aside {
+    padding: 10px;
+    background-color: lightcoral;
+    color: darkslategray;
+    border-radius: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+```
+
+</details>
+
+</br>
+
+<details>
+<summary>
 And now we'll build out our post endpoint to check for if the student name is a valid string and if it already exist, in which cases we'll want to have appropriate error handling: 
 </summary>
 
