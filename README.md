@@ -54,7 +54,7 @@ Now that our repo is connect to a remote repo on GitHub we can deploy it on Hero
 
 ## Rollbar Setup
 
-Now let's implement Rollbar. Go to rollbar.com and create an account using your GitHub account. We will be using Node.js as our framework. Skip the next step titled "Let's add the Node.js SDK". You should now see your Rollbar dashboard. 
+Now let's implement Rollbar. Go to rollbar.com and create an account using your GitHub account. We will be using Node.js as our framework. **You can do the next steps or just copy and past the instructions that pop up after creating a new project in Rollbar** Skip the next step titled "Let's add the Node.js SDK". You should now see your Rollbar dashboard. 
 
 Now we need to install Rollbar in our app: `npm i rollbar`
 
@@ -215,7 +215,7 @@ app.post('/api/student', (req, res)=>{
 The log will show our message and we can specify any other information that we want to show up in our Rollbar logs in the object. 
 
 Let's also add some top-level middleware that will track any errors that occur in our server:
-`app.use(rollbar.errorHandler())`
+`app.use(rollbar.errorHandler())`  **make sure that is is at the bottom of the file, but above the app.listen**
 
 Now let's add commit and push, re-deploy and try and add a student. Any errors or messages should now show up in Rollbar. 
 
